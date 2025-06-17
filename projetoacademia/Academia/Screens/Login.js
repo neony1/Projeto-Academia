@@ -1,21 +1,36 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, Button , TextInput} from 'react-native';
 import { useState } from 'react';
-
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../controller';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 export default function Login({navigation}) {
 
     const [email, setEmail] = useState(""); // valor do input
     const [senha, setSenha] = useState(""); // valor do input
 
-    const VerificarUser = () => {
+    const VerificarCadastro = () => {
         signInWithEmailAndPassword(auth, email, senha)
-            .then((userCredential) => {
-            navigation.navigate('Home');
-       
+        .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            // ...
+            navigation.navigate('TelaHome')
         })
         .catch((error) => {
-            console.log('erro ao logar:', error.message);
+            const errorCode = error.code;
+            const errorMessage = error.message;
+        });
+    }
+    const CadastrarUsuario = async () => {
+        createUserWithEmailAndPassword(auth, email, senha) // função que cria o usuario
+        .then((userCredential) => {        
+        console.log("Usuario cadastrado com sucesso!!", userCredential.user.email); // mostra o email que foi logado e depois vai para a tela de login
+        navigation.navigate('TelaHome')
+        })
+        .catch((error) => {
+            console.log('erro', error.message); // mostra o erro no console
         });
     }
     return (
@@ -26,8 +41,7 @@ export default function Login({navigation}) {
             <TextInput
             style={styles.txtinput}
             placeholder='E-mail'
-            value = {email}
-            onChangeText={setEmail}
+            value = {email}            onChangeText={setEmail}
             placeholderTextColor={'BLACK'}
             />
             <br></br>
@@ -43,14 +57,14 @@ export default function Login({navigation}) {
                 style={styles.bet}
                 title="Login"
                 color={'black'} // A senha é 1234  
-                onPress={VerificarUser}
+                onPress={VerificarCadastro}
                 
             /> <br></br>
             <Button
                 style={styles.bet}
                 title="Cadastrar-se"
                 color={'black'}
-                onPress={() => navigation.navigate('TelaCadastros')} // colocar a tela de cadastro.
+                onPress={CadastrarUsuario} // colocar a tela de cadastro.
             />
         </View>
     );
