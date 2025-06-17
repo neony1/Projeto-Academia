@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import {createStackNavigator} from '@react-navigation/stack'
 import { StyleSheet, Text, View, Image} from 'react-native';
 
@@ -16,11 +16,21 @@ export default function App(){
     <NavigationContainer>
       <Stack.Navigator>
       <Stack.Screen name='Telalogin' component={Login}/>
-      <Stack.Screen name='TelaCadastros' component={Cadastrar}/>
-      
+      <Stack.Screen name='TelaHome' component={DrawerFunc} options={{headerShown:false}} />
       </Stack.Navigator>
     </NavigationContainer>
   )
 }
 
+function DrawerFunc(){
  
+  const DrawerNav = createDrawerNavigator();
+ 
+  return(
+    <DrawerNav.Navigator initialRouteName='Home'>
+
+      <DrawerNav.Screen name='Home' component={Home}/>
+
+    </DrawerNav.Navigator>
+  );
+}
