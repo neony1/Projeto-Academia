@@ -7,6 +7,8 @@ export default function Home() {
            <View>
            ✅ Aula grátis – sem enrolação, só resultado. 
            ✅ Estrutura moderna em Criciúma e treinadores que vivem o que ensinam. 
+           ✅ Aula grátis  sem enrolação, só resultado
+           ✅ Estrutura moderna em Criciúma e treinadores que vivem o que ensinam
            ✅ Escolha sua modalidade e descubra seu potencial.
            </View>
         </View>
